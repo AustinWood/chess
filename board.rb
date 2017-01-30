@@ -1,3 +1,5 @@
+require_relative 'null_piece'
+
 class Board
 
   def initialize
@@ -5,7 +7,7 @@ class Board
   end
 
   def new_board
-    Array.new(8) { Array.new(8) {} }
+    Array.new(8) { Array.new(8) { NullPiece.new } }
   end
 
 

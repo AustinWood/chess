@@ -21,7 +21,7 @@ class Piece
   end
 
   private
-  
+
   def move_into_check(to_pos)
 
   end
