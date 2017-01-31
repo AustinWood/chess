@@ -1,4 +1,6 @@
 require_relative 'piece'
+require 'colorize'
+require 'singleton'
 
 class NullPiece < Piece
   include Singleton
