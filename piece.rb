@@ -1,6 +1,6 @@
 class Piece
 
-  attr_reader :position
+  attr_reader :position, :color
 
   def initialize(color, board, position)
     @color = color
@@ -25,7 +25,7 @@ class Piece
 
   end
 
-  def move_staus(new_position)
+  def move_status(new_position)
     return :invalid unless @board.in_bounds?(new_position)
     return :valid if @board[new_position].is_a?(NullPiece)
     return :capture if @board[new_position].color != self.color

@@ -1,5 +1,6 @@
 require_relative 'pieces'
 require_relative 'display'
+require 'byebug'
 
 class Board
 
@@ -14,42 +15,41 @@ class Board
     @grid.each_with_index do |el, i|
       case i
       when 0
-        @grid[i] = add_other_pieces(:white)
+        @grid[i] = add_other_pieces(:white, i)
       when 1
         #@grid[i] = add_pawns(:white)
       when 6
         #@grid[i] = add_pawns(:black)
       when 7
-        @grid[i] = add_other_pieces(:black)
+        @grid[i] = add_other_pieces(:black, i)
       end
     end
     nil
   end
 
-  def add_pawns(color)
+  def add_pawns(color, i)
     row = []
-    (0..7).each do |idx|
-      row << Piece.new(color, self, [row,idx])
+    (0..7).each do |j|
+      row << Piece.new(color, self, [i, j])
     end
     row
   end
 
-  def add_other_pieces(color)
+  def add_other_pieces(color, i)
     row = []
-    (0..7).each do |idx|
-      case idx
+    (0..7).each do |j|
+      case j
       when 0, 7
-        row << Rook.new(color, self, [row,idx])
+        #debugger
+        row << Rook.new(color, self, [i, j])
       when 1, 6
-        #do knight
-        row << NullPiece.instance
+        row << Knight.new(color, self, [i, j])
       when 2, 5
-        row << Bishop.new(color, self, [row,idx])
+        row << Bishop.new(color, self, [i, j])
       when 3
-        row << Queen.new(color, self, [row,idx])
+        row << Queen.new(color, self, [i, j])
       when 4
-        #make king
-        row << NullPiece.instance
+        row << King.new(color, self, [i, j])
       end
     end
     row
@@ -66,14 +66,16 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    if self[start_pos].is_a?(NullPiece)
+    #debugger
+    piece = self[start_pos]
+    if piece.is_a?(NullPiece)
       raise StandardError.new "there is no piece at start_pos"
-    elsif 0==1 #TODO the piece cannot move to end_pos
+    elsif !piece.moves.include?(end_pos)
       raise StandardError.new "the piece cannot move to end_pos"
     end
 
     self[end_pos] = self[start_pos]
-    self[start_pos] = NullPiece.new
+    self[start_pos] = NullPiece.instance
 
   end
 
@@ -81,10 +83,13 @@ class Board
     pos.all? { |x| x >= 0 && x < 8 }
   end
 
+
 end
 
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
-  display.loop_test
+  board.move_piece([0,1],[2,2])
+  board.move_piece([2,2],[0,1])
+  display.render
 end
