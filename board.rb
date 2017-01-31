@@ -66,7 +66,6 @@ class Board
   end
 
   def move_piece(start_pos, end_pos)
-    #debugger
     piece = self[start_pos]
     if piece.is_a?(NullPiece)
       raise StandardError.new "there is no piece at start_pos"
@@ -74,8 +73,10 @@ class Board
       raise StandardError.new "the piece cannot move to end_pos"
     end
 
-    self[end_pos] = self[start_pos]
+    self[end_pos] = piece
+    piece.position = end_pos
     self[start_pos] = NullPiece.instance
+
 
   end
 
@@ -89,7 +90,8 @@ end
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
-  board.move_piece([0,1],[2,2])
-  board.move_piece([2,2],[0,1])
+  board.move_piece([0,0],[2,0])
+  display.render
+  board.move_piece([2,0],[2,5])
   display.render
 end
