@@ -1,3 +1,5 @@
+require 'byebug'
+
 module SteppingPiece
   KING_MOVES = [
     [1, 1], [-1, 1], [-1, -1], [1, -1],
@@ -10,9 +12,9 @@ module SteppingPiece
 
 
   def moves
-    moves_arr = (self.is_a?(King) ? KING_MOVES : KNIGHT_MOVES )
-    moves_arr.map! { |move| [@position.first + move.first, @position.last + move.last] }
-    moves_arr.reject! { |move| move_status(move) == :invalid }
+    unit_moves = (self.is_a?(King) ? KING_MOVES : KNIGHT_MOVES )
+    moves_arr = unit_moves.map { |move| [@position.first + move.first, @position.last + move.last] }
+    valid_moves = moves_arr.reject { |move| move_status(move) == :invalid }
   end
 
 
