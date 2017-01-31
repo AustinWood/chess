@@ -6,7 +6,7 @@ class Board
   attr_reader :grid
 
   def initialize
-    @grid = Array.new(8) { Array.new(8) { NullPiece.new } }
+    @grid = Array.new(8) { Array.new(8) { NullPiece.instance } }
     add_starting_pieces
   end
 
@@ -23,6 +23,7 @@ class Board
         @grid[i] = add_other_pieces(:black)
       end
     end
+    nil
   end
 
   def add_pawns(color)
