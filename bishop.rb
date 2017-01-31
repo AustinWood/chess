@@ -3,8 +3,8 @@ require_relative 'sliding_piece'
 
 class Bishop < Piece
   include SlidingPiece
-  
-  def initialize(board, position)
+
+  def initialize(color, board, position)
     super
   end
 

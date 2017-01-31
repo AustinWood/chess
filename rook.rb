@@ -4,7 +4,7 @@ require_relative 'sliding_piece'
 class Rook < Piece
   include SlidingPiece
 
-  def initialize(board, position)
+  def initialize(color, board, position)
     super
   end
 

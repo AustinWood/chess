@@ -16,9 +16,9 @@ class Board
       when 0
         @grid[i] = add_other_pieces(:white)
       when 1
-        @grid[i] = add_pawns(:white)
+        #@grid[i] = add_pawns(:white)
       when 6
-        @grid[i] = add_pawns(:black)
+        #@grid[i] = add_pawns(:black)
       when 7
         @grid[i] = add_other_pieces(:black)
       end
@@ -37,7 +37,20 @@ class Board
   def add_other_pieces(color)
     row = []
     (0..7).each do |idx|
-      row << Queen.new(color, self, [row,idx])
+      case idx
+      when 0, 7
+        row << Rook.new(color, self, [row,idx])
+      when 1, 6
+        #do knight
+        row << NullPiece.instance
+      when 2, 5
+        row << Bishop.new(color, self, [row,idx])
+      when 3
+        row << Queen.new(color, self, [row,idx])
+      when 4
+        #make king
+        row << NullPiece.instance
+      end
     end
     row
   end
