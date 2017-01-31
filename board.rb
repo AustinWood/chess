@@ -45,3 +45,9 @@ class Board
   end
 
 end
+
+if __FILE__ == $PROGRAM_NAME
+  board = Board.new
+  display = Display.new(board)
+  display.loop_test
+end

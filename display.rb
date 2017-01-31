@@ -9,6 +9,16 @@ class Display
     @cursor = Cursor.new([0, 0], board)
   end
 
+  def loop_test
+    i = 0
+    render
+    until i > 10
+      @cursor.get_input
+      render
+      i += 1
+    end
+  end
+
   def render
     system('clear')
     @board.grid.each_with_index do |row, row_idx|
@@ -21,6 +31,7 @@ class Display
       puts str
     end
     puts "\n"
+
   end
 
 end
