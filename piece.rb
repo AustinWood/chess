@@ -5,7 +5,7 @@ class Piece
   end
 
   def to_s
-
+    return "O"
   end
 
   def empty?
