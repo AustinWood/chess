@@ -1,13 +1,16 @@
 require_relative 'piece'
+require_relative 'sliding_piece'
 
 class Queen < Piece
+  include SlidingPiece
 
-  def initialize(board, position)
+  def initialize(color, board, position)
     super
   end
 
   def to_s
-    return "♕"
+    return "♕" if @color == :white
+    return "♛"
   end
 
   def move_dirs

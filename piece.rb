@@ -2,13 +2,15 @@ class Piece
 
   attr_reader :position
 
-  def initialize(board, position)
+  def initialize(color, board, position)
+    @color = color
     @board = board
     @position = position
   end
 
   def to_s
-    return "O"
+    return "♙" if @color == :white
+    return "♟"
   end
 
   def empty?
@@ -21,6 +23,13 @@ class Piece
 
   def moves
 
+  end
+
+  def move_staus(new_position)
+    return :invalid unless @board.in_bounds?(new_position)
+    return :valid if @board[new_position].is_a?(NullPiece)
+    return :capture if @board[new_position].color != self.color
+    return :invalid
   end
 
   private

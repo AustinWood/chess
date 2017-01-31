@@ -12,7 +12,7 @@ class Display
   def loop_test
     i = 0
     render
-    until i > 50
+    until i > 10
       @cursor.get_input
       render
       i += 1
@@ -26,7 +26,7 @@ class Display
       row.each_with_index do |piece, col_idx|
         pos_str = piece.to_s
         pos_str = pos_str.colorize(:red) if @cursor.cursor_pos == [row_idx, col_idx]
-        str << pos_str
+        str << " #{pos_str}"
       end
       puts str
     end

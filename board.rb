@@ -1,5 +1,4 @@
-require_relative 'null_piece'
-require_relative 'piece'
+require_relative 'pieces'
 require_relative 'display'
 
 class Board
@@ -12,10 +11,34 @@ class Board
   end
 
   def add_starting_pieces
-    arr = [0,1,6,7]
-    arr.each do |row|
-      @grid[row] = Array.new(8) { Piece.new }
+    @grid.each_with_index do |el, i|
+      case i
+      when 0
+        @grid[i] = add_other_pieces(:white)
+      when 1
+        @grid[i] = add_pawns(:white)
+      when 6
+        @grid[i] = add_pawns(:black)
+      when 7
+        @grid[i] = add_other_pieces(:black)
+      end
     end
+  end
+
+  def add_pawns(color)
+    row = []
+    (0..7).each do |idx|
+      row << Piece.new(color, self, [row,idx])
+    end
+    row
+  end
+
+  def add_other_pieces(color)
+    row = []
+    (0..7).each do |idx|
+      row << Queen.new(color, self, [row,idx])
+    end
+    row
   end
 
   def [](pos)
@@ -40,7 +63,7 @@ class Board
 
   end
 
-  def in_bounds(pos)
+  def in_bounds?(pos)
     pos.all? { |x| x >= 0 && x < 8 }
   end
 
