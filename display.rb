@@ -12,7 +12,7 @@ class Display
   def loop_test
     i = 0
     render
-    until i > 10
+    until i > 50
       @cursor.get_input
       render
       i += 1

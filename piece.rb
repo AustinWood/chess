@@ -1,7 +1,10 @@
 class Piece
 
-  def initialize
+  attr_reader :position
 
+  def initialize(board, position)
+    @board = board
+    @position = position
   end
 
   def to_s
@@ -16,7 +19,7 @@ class Piece
 
   end
 
-  def valid_moves
+  def moves
 
   end
 
@@ -25,6 +28,5 @@ class Piece
   def move_into_check(to_pos)
 
   end
-
 
 end
