@@ -101,6 +101,25 @@ class Board
     end
   end
 
+  def checkmate?(color)
+    return false unless in_check?(color)
+    flat_grid = @grid.flatten
+    flat_grid.each do |piece|
+      return false unless piece.valid_moves.empty?
+    end
+    true
+  end
+
+  def dup
+    new_grid = @grid.dup
+    new_grid.each_with_index do |row, i|
+      row.each_with_index do |piece, j|
+        new_board[i,j] = piece.dup
+
+
+
+  end
+
 end
 
 if __FILE__ == $PROGRAM_NAME

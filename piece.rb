@@ -15,17 +15,15 @@ class Piece
     return "♟"
   end
 
-  def empty?
-
-  end
-
-  def symbol
-
+  def dup
+    new_piece = self.dup
   end
 
   def moves
 
   end
+
+
 
   def move_status(new_position)
     return :invalid unless @board.in_bounds?(new_position)
