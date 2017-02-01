@@ -17,9 +17,9 @@ class Board
       when 0
         @grid[i] = add_other_pieces(:white, i)
       when 1
-        #@grid[i] = add_pawns(:white)
+        @grid[i] = add_pawns(:white, i)
       when 6
-        #@grid[i] = add_pawns(:black)
+        @grid[i] = add_pawns(:black, i)
       when 7
         @grid[i] = add_other_pieces(:black, i)
       end
@@ -30,7 +30,7 @@ class Board
   def add_pawns(color, i)
     row = []
     (0..7).each do |j|
-      row << Piece.new(color, self, [i, j])
+      row << Pawn.new(color, self, [i, j])
     end
     row
   end
@@ -69,7 +69,9 @@ class Board
     piece = self[start_pos]
     if piece.is_a?(NullPiece)
       raise StandardError.new "there is no piece at start_pos"
-    elsif !piece.moves.include?(end_pos)
+    end
+    valid_moves = piece.moves
+    unless valid_moves.include?(end_pos)
       raise StandardError.new "the piece cannot move to end_pos"
     end
 
@@ -90,8 +92,8 @@ end
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
-  board.move_piece([0,1],[2,2])
+  board.move_piece([1,1],[2,1])
   display.render
-  board.move_piece([2,2],[3,4])
+  #board.move_piece([2,2],[3,4])
   display.render
 end
