@@ -13,7 +13,7 @@ class Pawn < Piece
   end
 
   def moves
-    return [forward_moves] #+ capture_moves
+    return forward_moves #+ capture_moves
     # unit_moves
     # moves_arr = unit_moves.map { |move| [@position.first + move.first, @position.last + move.last] }
     # valid_moves = moves_arr.reject { |move| move_status(move) == :invalid }
@@ -22,9 +22,17 @@ class Pawn < Piece
   def forward_moves
     unit_move = (@color == :white ? [1,0] : [-1,0])
     one_step = new_pos(unit_move)
-    return one_step if move_status(one_step) == :valid
+    forward_arr = []
+    if move_status(one_step) == :valid
+      forward_arr << one_step
+      if @position.first == (@color == :white ? 1 : 6)
+        unit_move = (@color == :white ? [2,0] : [-2,0])
 
-
+        two_step = new_pos(unit_move)
+        forward_arr << two_step if move_status(two_step) == :valid
+      end
+    end
+    forward_arr
   end
 
   def capture_moves
