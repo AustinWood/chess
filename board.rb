@@ -74,27 +74,46 @@ class Board
     unless valid_moves.include?(end_pos)
       raise StandardError.new "the piece cannot move to end_pos"
     end
-
     self[end_pos] = piece
     piece.position = end_pos
     self[start_pos] = NullPiece.instance
-
-
   end
 
   def in_bounds?(pos)
     pos.all? { |x| x >= 0 && x < 8 }
   end
 
+  def in_check?(color)
+    king_loc = find_king(color)
+    flat_grid = @grid.flatten
+    flat_grid.each do |piece|
+      if !piece.is_a?(NullPiece) && piece.color != color
+        return true if piece.moves.include?(king_loc)
+      end
+    end
+    false
+  end
+
+  def find_king(color)
+    flat_grid = @grid.flatten
+    flat_grid.each do |piece|
+      return piece.position if piece.is_a?(King) && piece.color == color
+    end
+  end
 
 end
 
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
-  board.move_piece([1,0],[3,0])
-  board.move_piece([3,0],[4,0])
-  board.move_piece([4,0],[5,0])
-  board.move_piece([5,0],[6,0])
   display.render
+  board.move_piece([6,4],[5,4])
+  board.move_piece([7,3],[3,7])
+  board.move_piece([1,5],[2,5])
+  #board.move_piece([3,7],[0,4])
+  display.render
+  p board.in_check?(:white)
+
+
+
 end
