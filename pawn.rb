@@ -13,10 +13,7 @@ class Pawn < Piece
   end
 
   def moves
-    return forward_moves #+ capture_moves
-    # unit_moves
-    # moves_arr = unit_moves.map { |move| [@position.first + move.first, @position.last + move.last] }
-    # valid_moves = moves_arr.reject { |move| move_status(move) == :invalid }
+    forward_moves + capture_moves
   end
 
   def forward_moves
@@ -36,6 +33,17 @@ class Pawn < Piece
   end
 
   def capture_moves
+    capture_arr = []
+
+    unit_moves = (@color == :white ? [[1,-1], [1,1]] : [[-1,-1], [-1,1]])
+
+    unit_moves.each do |move|
+      capture_pos = new_pos(move)
+      capture_arr << capture_pos if move_status(capture_pos) == :capture
+    end
+
+
+    capture_arr
 
   end
 

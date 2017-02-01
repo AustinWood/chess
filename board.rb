@@ -92,8 +92,9 @@ end
 if __FILE__ == $PROGRAM_NAME
   board = Board.new
   display = Display.new(board)
-  board.move_piece([6,1],[4,1])
-  display.render
-  board.move_piece([4,1],[3,1])
+  board.move_piece([1,0],[3,0])
+  board.move_piece([3,0],[4,0])
+  board.move_piece([4,0],[5,0])
+  board.move_piece([5,0],[6,0])
   display.render
 end
